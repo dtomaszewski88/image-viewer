@@ -41,18 +41,21 @@ const App = ({data, dataCount, actions}) => {
                                         </Button>
                                     </div>
                                     <div className="image-item-content">
-                                        <FontAwesomeIcon icon={faImage} size={'7x'} />
+                                        {/*<FontAwesomeIcon className="image-placeholder" icon={faImage} size={'7x'} />*/}
+                                        <img
+                                            src={imageItem.thumbnail_url}
+                                            alt={imageItem.title}
+                                            className="image-img"
+                                        />
                                     </div>
-                                    <div className="image-item-desc-wrap">
-                                        <div className="image-item-desc">
-                                            <div className="image-title">
-                                                <span className="desc-caption">{'Title: '}</span>
-                                                <span className="desc-text">{imageItem.title}</span>
-                                            </div>
-                                            <div className="image-author">
-                                                <span className="desc-caption">{'Author: '}</span>
-                                                <span className="desc-text">{imageItem.author}</span>
-                                            </div>
+                                    <div className="image-item-desc">
+                                        <div className="image-title">
+                                            <span className="desc-caption">{'Title: '}</span>
+                                            <span className="desc-text">{imageItem.title}</span>
+                                        </div>
+                                        <div className="image-author">
+                                            <span className="desc-caption">{'Author: '}</span>
+                                            <span className="desc-text">{imageItem.author}</span>
                                         </div>
                                     </div>
                                 </div>

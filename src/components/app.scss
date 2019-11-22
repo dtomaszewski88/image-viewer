@@ -26,7 +26,7 @@
             margin-bottom: 1rem;
             .image-item-content {
                 background-color: #eee;
-                color: #444;
+                color: #666;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -34,28 +34,27 @@
                 height: 100%;
             }
             .image-item-toolbar,
-            .image-item-desc-wrap {
+            .image-item-desc {
                 position: absolute;
                 left: 0;
                 right: 0;
             }
-            .image-item-desc-wrap {
+            .image-item-desc {
                 bottom: 0;
                 height: 4rem;
-                border: 0.25rem solid #eeeeee;
+                border: 0.25rem solid transparent;
                 border-top: none;
                 //padding: 0.25rem;
                 overflow: hidden;
-                .image-item-desc {
-                    padding: 0 0.25rem;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-around;
-                    height: 4rem;
-                    background-color: #fdfdfd;
-                    transform: translate(0, 50%);
-                    transition: transform 200ms ease-in;
-                }
+                padding: 0 0.25rem;
+                border-radius: 0.25rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                color: #fefefe;
+                background-color: rgba(0, 0, 0, 0.6);
+                transform: translate(0, 50%);
+                transition: transform 200ms ease-in;
                 .image-title,
                 .image-author {
                     white-space: nowrap;
@@ -80,10 +79,8 @@
                 }
             }
             &:hover {
-                .image-item-desc-wrap {
-                    .image-item-desc {
-                        transform: translate(0, 0);
-                    }
+                .image-item-desc {
+                    transform: translate(0, 0);
                 }
                 .image-item-toolbar {
                     transform: translate(0, 0);
