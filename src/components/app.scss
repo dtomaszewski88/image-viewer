@@ -11,10 +11,89 @@
         justify-content: center;
     }
     &-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
         padding: 2rem;
+    }
+    .image-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        .image-item {
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            //border: 2px solid #eeeeee;
+            border-radius: 0.25rem;
+            margin-bottom: 1rem;
+            .image-item-content {
+                background-color: #eee;
+                color: #444;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+            }
+            .image-item-toolbar,
+            .image-item-desc-wrap {
+                position: absolute;
+                left: 0;
+                right: 0;
+            }
+            .image-item-desc-wrap {
+                bottom: 0;
+                height: 4rem;
+                border: 0.25rem solid #eeeeee;
+                border-top: none;
+                //padding: 0.25rem;
+                overflow: hidden;
+                .image-item-desc {
+                    padding: 0 0.25rem;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    height: 4rem;
+                    background-color: #fdfdfd;
+                    transform: translate(0, 50%);
+                    transition: transform 200ms ease-in;
+                }
+                .image-title,
+                .image-author {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+                .desc-caption {
+                    font-weight: 600;
+                }
+            }
+            .image-item-toolbar {
+                top: 0;
+                display: flex;
+                padding: 0.25rem;
+                justify-content: space-between;
+                background-color: rgba(0, 0, 0, 0);
+                transform: translate(0, -100%);
+                transition: transform 200ms ease-in, background-color 200ms ease-in;
+                .open-details-button {
+                }
+                .remove-item {
+                }
+            }
+            &:hover {
+                .image-item-desc-wrap {
+                    .image-item-desc {
+                        transform: translate(0, 0);
+                    }
+                }
+                .image-item-toolbar {
+                    transform: translate(0, 0);
+                    background-color: rgba(0, 0, 0, 0.3);
+                    .open-details-button {
+                    }
+                    .remove-item {
+                    }
+                }
+            }
+        }
     }
 }
