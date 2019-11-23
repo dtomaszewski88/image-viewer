@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
 import {func, shape, string} from 'prop-types';
 import {Form, InputGroup, FormControl, Button, Col} from 'react-bootstrap';
-import {get, noop} from 'lodash';
-import './image-details.scss';
+import {get} from 'lodash';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faTrash, faArrowLeft, faShareSquare, faTimesCircle, faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import {faTrash, faArrowLeft, faShareSquare} from '@fortawesome/free-solid-svg-icons';
 import DeletePrompt from '../delete-prompt/delete-prompt';
+import LazyLoadImg from '../lazy-load-img/lazy-load-img';
+
+import './image-details.scss';
+
 const ImageDetails = ({actions, imageItem}) => {
     const {selectImage, updateImage, removeImage} = actions;
     const [deletePrompt, setDeletePrompt] = useState(false);
@@ -19,6 +22,7 @@ const ImageDetails = ({actions, imageItem}) => {
 
     return (
         <div className="image-details" onClick={() => setDeletePrompt(false)}>
+            <LazyLoadImg src={imageItem.download_url} imageProps={{alt: imageItem.title, className: 'details-image'}} />
             <div className="details-toolbar-top">
                 <Button
                     onClick={evt => {
@@ -75,12 +79,6 @@ const ImageDetails = ({actions, imageItem}) => {
                 </Form.Row>
             </div>
             {deletePrompt && <DeletePrompt onConfirm={handleDeleteConfirm} />}
-            <img
-                className={'detailed-image'}
-                src={imageItem.download_url}
-                alt={imageItem.title}
-                style={{width: '100%'}}
-            />
         </div>
     );
 };

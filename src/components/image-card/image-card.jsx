@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {Button} from 'react-bootstrap';
 import {func, shape, string} from 'prop-types';
-import {noop} from 'lodash';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faExpandArrowsAlt, faTrash, faImage, faCheckCircle, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+import {faExpandArrowsAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import DeletePrompt from '../delete-prompt/delete-prompt';
+import LazyLoadImg from '../lazy-load-img/lazy-load-img';
+
 import './image-card.scss';
-import {removeImage} from '../../redux/actions/app.actions';
 
 const imageItemStyle = {
     width: 300,
@@ -16,7 +16,7 @@ const imageItemStyle = {
 const ImageCard = ({imageItem, actions}) => {
     const {selectImage, removeImage} = actions;
     const [deletePrompt, setDeletePrompt] = useState(false);
-    const [imageLoaded, setImageLoaded] = useState(false);
+
     const handleDeleteConfirm = () => removeImage(imageItem.id);
     return (
         <div className="image-card" key={imageItem.id} style={imageItemStyle} onClick={() => setDeletePrompt(false)}>
@@ -37,16 +37,12 @@ const ImageCard = ({imageItem, actions}) => {
             </div>
             <div className="image-card-content">
                 {deletePrompt && <DeletePrompt onConfirm={handleDeleteConfirm} />}
-                {!imageLoaded && (
-                    <div className="image-placeholder">
-                        <FontAwesomeIcon className="image-placeholder-icon" icon={faImage} size={'7x'} />
-                    </div>
-                )}
-                <img
+                <LazyLoadImg
                     src={imageItem.thumbnail_url}
-                    alt={imageItem.title}
-                    className="image-img"
-                    onLoad={() => setImageLoaded(true)}
+                    imageProps={{
+                        alt: imageItem.title,
+                        className: 'image-img'
+                    }}
                 />
             </div>
             <div className="image-card-desc">

@@ -1,7 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {addData, removeData, removeImage, selectImage, updateImage} from 'redux/actions/app.actions';
+import {addData, removeImage, selectImage, updateImage} from 'redux/actions/app.actions';
 import {LoremIpsum} from 'lorem-ipsum';
-import {random, chain, unset} from 'lodash';
+import {random, chain} from 'lodash';
 import imageData from 'mock-data/images';
 
 const lorem = new LoremIpsum({
