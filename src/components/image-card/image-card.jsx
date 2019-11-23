@@ -5,6 +5,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExpandArrowsAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import DeletePrompt from '../delete-prompt/delete-prompt';
 import LazyLoadImg from '../lazy-load-img/lazy-load-img';
+import classNames from 'classnames';
+import {useIsVisibleOnScreen} from 'custom-hooks/use-is-visible-on-screen';
 
 import './image-card.scss';
 
@@ -16,45 +18,60 @@ const imageItemStyle = {
 const ImageCard = ({imageItem, actions}) => {
     const {selectImage, removeImage} = actions;
     const [deletePrompt, setDeletePrompt] = useState(false);
-
+    const [elementRef, isVisibleOnScreen] = useIsVisibleOnScreen(imageItem.id, {vOffset: 600});
     const handleDeleteConfirm = () => removeImage(imageItem.id);
+    const classes = classNames('image-card', {hidden: !isVisibleOnScreen});
     return (
-        <div className="image-card" key={imageItem.id} style={imageItemStyle} onClick={() => setDeletePrompt(false)}>
-            <div className="image-card-toolbar">
-                <Button onClick={() => selectImage(imageItem.id)} className="open-details-button" variant="info">
-                    <FontAwesomeIcon icon={faExpandArrowsAlt} />
-                </Button>
-                <Button
-                    onClick={evt => {
-                        evt.stopPropagation();
-                        setDeletePrompt(true);
-                    }}
-                    className="remove-item"
-                    variant="danger"
-                >
-                    <FontAwesomeIcon icon={faTrash} />
-                </Button>
-            </div>
-            <div className="image-card-content">
-                {deletePrompt && <DeletePrompt onConfirm={handleDeleteConfirm} />}
-                <LazyLoadImg
-                    src={imageItem.thumbnail_url}
-                    imageProps={{
-                        alt: imageItem.title,
-                        className: 'image-img'
-                    }}
-                />
-            </div>
-            <div className="image-card-desc">
-                <div className="image-title">
-                    <span className="desc-caption">{'Title: '}</span>
-                    <span className="desc-text">{imageItem.title}</span>
-                </div>
-                <div className="image-author">
-                    <span className="desc-caption">{'Author: '}</span>
-                    <span className="desc-text">{imageItem.author}</span>
-                </div>
-            </div>
+        <div
+            ref={elementRef}
+            className={classes}
+            key={imageItem.id}
+            style={imageItemStyle}
+            onClick={() => setDeletePrompt(false)}
+        >
+            {isVisibleOnScreen && (
+                <>
+                    <div className="image-card-toolbar">
+                        <Button
+                            onClick={() => selectImage(imageItem.id)}
+                            className="open-details-button"
+                            variant="info"
+                        >
+                            <FontAwesomeIcon icon={faExpandArrowsAlt} />
+                        </Button>
+                        <Button
+                            onClick={evt => {
+                                evt.stopPropagation();
+                                setDeletePrompt(true);
+                            }}
+                            className="remove-item"
+                            variant="danger"
+                        >
+                            <FontAwesomeIcon icon={faTrash} />
+                        </Button>
+                    </div>
+                    <div className="image-card-content">
+                        {deletePrompt && <DeletePrompt onConfirm={handleDeleteConfirm} />}
+                        <LazyLoadImg
+                            src={imageItem.thumbnail_url}
+                            imageProps={{
+                                alt: imageItem.title,
+                                className: 'image-img'
+                            }}
+                        />
+                    </div>
+                    <div className="image-card-desc">
+                        <div className="image-title">
+                            <span className="desc-caption">{'Title: '}</span>
+                            <span className="desc-text">{imageItem.title}</span>
+                        </div>
+                        <div className="image-author">
+                            <span className="desc-caption">{'Author: '}</span>
+                            <span className="desc-text">{imageItem.author}</span>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

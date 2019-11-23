@@ -1,4 +1,7 @@
 .image-card {
+    &.hidden {
+        background-color: #eeeeee;
+    }
     overflow: hidden;
     position: relative;
     cursor: pointer;

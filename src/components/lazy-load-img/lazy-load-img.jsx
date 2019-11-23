@@ -4,8 +4,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faImage} from '@fortawesome/free-solid-svg-icons';
 
 import './lazy-load-img.scss';
-import {useImgUrlCache} from '../../custom-hooks/use-img-url-cache';
 import classNames from 'classnames';
+import {useImgUrlCache} from '../../custom-hooks/use-img-url-cache';
 
 const LazyLoadImg = ({className, src, imageProps, fallbackComponent}) => {
     const [currentImageLoaded, setImageLoaded] = useState(false);
@@ -27,7 +27,7 @@ const LazyLoadImg = ({className, src, imageProps, fallbackComponent}) => {
     );
 };
 LazyLoadImg.propTypes = {
-    className: '',
+    className: string,
     fallbackComponent: node,
     imageProps: object,
     src: string.isRequired
