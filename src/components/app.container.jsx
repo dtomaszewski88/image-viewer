@@ -1,13 +1,13 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {addData, removeData} from 'redux/actions/app.actions';
-import {getAppData, getAppDataCount} from 'redux/selectors';
+import {getSortedData, getSelectedImage} from 'redux/selectors';
 
 import App from './app';
 
 const mapStateToProps = state => ({
-    data: getAppData(state),
-    dataCount: getAppDataCount(state)
+    selectedImage: getSelectedImage(state),
+    data: getSortedData(state)
 });
 
 const mapDispatchToProps = dispatch => ({

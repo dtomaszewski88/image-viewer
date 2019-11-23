@@ -1,0 +1,17 @@
+.delete-prompt {
+    background-color: black;
+    border-radius: 0.25rem;
+    padding: 1.5rem;
+    white-space: nowrap;
+    top: 50%;
+    left: 50%;
+    color: #fefefe;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.75);
+    transform: translate(-50%, -50%);
+    .prompt-buttons {
+        padding-top: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+    }
+}
