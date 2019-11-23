@@ -1,20 +1,22 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {addData, removeData} from 'redux/actions/app.actions';
-import {getSortedData, getSelectedImage} from 'redux/selectors';
+import {updateTileSize, updateSearch} from 'redux/actions/app.actions';
+import {getImgDataWithThumbnailUrl, getTileSize, getSelectedImage, getSearch} from 'redux/selectors';
 
 import App from './app';
 
 const mapStateToProps = state => ({
+    search: getSearch(state),
     selectedImage: getSelectedImage(state),
-    data: getSortedData(state)
+    data: getImgDataWithThumbnailUrl(state),
+    tileSize: getTileSize(state)
 });
 
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(
         {
-            addData,
-            removeData
+            updateTileSize,
+            updateSearch
         },
         dispatch
     )

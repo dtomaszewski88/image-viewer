@@ -9,6 +9,7 @@
     position: absolute;
     background-color: rgba(0, 0, 0, 0.75);
     transform: translate(-50%, -50%);
+    z-index: 100;
     .prompt-buttons {
         padding-top: 0.5rem;
         display: flex;

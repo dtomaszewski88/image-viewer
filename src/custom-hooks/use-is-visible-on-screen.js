@@ -33,7 +33,7 @@ export const useIsVisibleOnScreen = (key, options = {}, initialRef = null) => {
     const {debounceTime = 500, vOffset = 200, hOffset = 200} = options;
     const [isVisibleOnScreen, setIsVisibleOnScreen] = useState(false);
     const [currentScroll] = useWindowScroll(key);
-    const setVisibleDebounced = debounce(setIsVisibleOnScreen, debounceTime);
+    const setVisibleDebounced = debounce(setIsVisibleOnScreen, debounceTime, {leading: true});
     const isInViewThrottled = throttle(isInView, 200);
     useLayoutEffect(
         () => {

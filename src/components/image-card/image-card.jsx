@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button} from 'react-bootstrap';
-import {func, shape, string} from 'prop-types';
+import {func, number, shape, string} from 'prop-types';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExpandArrowsAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import DeletePrompt from '../delete-prompt/delete-prompt';
@@ -9,13 +9,9 @@ import classNames from 'classnames';
 import {useIsVisibleOnScreen} from 'custom-hooks/use-is-visible-on-screen';
 
 import './image-card.scss';
+import {TILE_SIZES} from 'constants/tile-sizes';
 
-const imageItemStyle = {
-    width: 300,
-    height: 300
-};
-
-const ImageCard = ({imageItem, actions}) => {
+const ImageCard = ({imageItem, actions, tileSize}) => {
     const {selectImage, removeImage} = actions;
     const [deletePrompt, setDeletePrompt] = useState(false);
     const [elementRef, isVisibleOnScreen] = useIsVisibleOnScreen(imageItem.id, {vOffset: 600});
@@ -26,7 +22,7 @@ const ImageCard = ({imageItem, actions}) => {
             ref={elementRef}
             className={classes}
             key={imageItem.id}
-            style={imageItemStyle}
+            style={tileSize}
             onClick={() => setDeletePrompt(false)}
         >
             {isVisibleOnScreen && (
@@ -84,6 +80,13 @@ ImageCard.propTypes = {
         id: string.isRequired,
         thumbnail_url: string.isRequired,
         title: string.isRequired
-    }).isRequired
+    }).isRequired,
+    tileSize: shape({
+        width: number.isRequired,
+        height: number.isRequired
+    })
+};
+ImageCard.defaultProps = {
+    tileSize: TILE_SIZES.SMALL
 };
 export default ImageCard;

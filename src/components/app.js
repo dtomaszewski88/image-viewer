@@ -1,30 +1,59 @@
 import React from 'react';
-import {map} from 'lodash';
-import {Button, ButtonGroup} from 'react-bootstrap';
-import {shape, object, func, arrayOf, string} from 'prop-types';
-import './app.scss';
-
+import {get, map} from 'lodash';
+import {Navbar, Nav, Form, FormControl, Button, ButtonGroup} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCoffee, faExpandArrowsAlt} from '@fortawesome/free-solid-svg-icons';
+import {faTh, faThLarge} from '@fortawesome/free-solid-svg-icons';
+import {object, arrayOf, string, shape, func} from 'prop-types';
+import './app.scss';
+import {TILE_SIZES} from '../constants/tile-sizes';
+
 import ImageCardContainer from './image-card/image-card.container';
 import ImageDetailsContainer from './image-details/image-details.container';
 
-const App = ({data, actions, selectedImage}) => {
-    const {addData, removeData} = actions;
+const App = ({data, search, selectedImage, tileSize, actions}) => {
+    const {updateSearch, updateTileSize} = actions;
+
+    const handleSearchChange = evt => {
+        const value = get(evt, 'target.value', '');
+        updateSearch(value);
+    };
+
     return (
         <div className="app">
-            <header className="app-header">
-                <h1 className="app-title">{'Image Viewer'}</h1>
-                <FontAwesomeIcon icon={faCoffee} />
-                <FontAwesomeIcon icon={faExpandArrowsAlt} />
-            </header>
+            {!selectedImage && (
+                <Navbar bg="dark" variant="dark" sticky="top">
+                    <Navbar.Brand href="#home">{'Image Viewer'}</Navbar.Brand>
+                    <Nav className="mr-auto">
+                        <Nav.Link href="#home">{'Home'}</Nav.Link>
+                    </Nav>
+                    <Form inline>
+                        <FormControl
+                            value={search}
+                            onChange={handleSearchChange}
+                            type="text"
+                            placeholder="Search"
+                            className="mr-sm-2"
+                        />
+                        <ButtonGroup>
+                            <Button
+                                onClick={() => updateTileSize(TILE_SIZES.SMALL)}
+                                className="go-back-button"
+                                variant={tileSize === TILE_SIZES.SMALL ? 'primary' : 'secondary'}
+                            >
+                                <FontAwesomeIcon icon={faTh} />
+                            </Button>
+                            <Button
+                                onClick={() => updateTileSize(TILE_SIZES.LARGE)}
+                                className="go-back-button"
+                                variant={tileSize === TILE_SIZES.LARGE ? 'primary' : 'secondary'}
+                            >
+                                <FontAwesomeIcon icon={faThLarge} />
+                            </Button>
+                        </ButtonGroup>
+                    </Form>
+                </Navbar>
+            )}
             <main>
-                <section className="app-toolbar">
-                    <ButtonGroup>
-                        <Button onClick={() => addData()}>{'Add'}</Button>
-                        <Button onClick={() => removeData()}>{'Remove'}</Button>
-                    </ButtonGroup>
-                </section>
                 <section className="app-content">
                     {!selectedImage && (
                         <div className="image-grid">
@@ -41,11 +70,13 @@ const App = ({data, actions, selectedImage}) => {
 };
 App.propTypes = {
     actions: shape({
-        addData: func.isRequired,
-        removeData: func.isRequired
+        updateSearch: func.isRequired,
+        updateTileSize: func.isRequired
     }).isRequired,
     data: arrayOf(object).isRequired,
-    selectedImage: string
+    search: string.isRequired,
+    selectedImage: string,
+    tileSize: object.isRequired
 };
 App.defaultProps = {
     selectedImage: null

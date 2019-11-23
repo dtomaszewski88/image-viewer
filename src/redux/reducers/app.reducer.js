@@ -1,25 +1,21 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {addData, removeImage, selectImage, updateImage} from 'redux/actions/app.actions';
+import {updateSearch, removeImage, selectImage, updateImage, updateTileSize} from 'redux/actions/app.actions';
 import {LoremIpsum} from 'lorem-ipsum';
 import {random, chain} from 'lodash';
 import imageData from 'mock-data/images';
+import {TILE_SIZES} from 'constants/tile-sizes';
 
 const lorem = new LoremIpsum({
     sentencesPerParagraph: {max: 8, min: 4},
     wordsPerSentence: {max: 16, min: 4}
 });
 
-const getThumbUrl = ({id}) => {
-    return `https://picsum.photos/id/${id}/300`;
-};
-
 const transformImageData = imageData => {
     return chain(imageData)
         .map(img => ({
             ...img,
             title: lorem.generateWords(random(1, 3)),
-            description: lorem.generateSentences(random(1, 5)),
-            thumbnail_url: getThumbUrl(img)
+            description: lorem.generateSentences(random(1, 5))
         }))
         .keyBy('id')
         .value();
@@ -28,11 +24,18 @@ const transformedData = transformImageData(imageData);
 
 const initialState = {
     data: transformedData,
+    search: '',
+    tileSize: TILE_SIZES.SMALL,
     selectedImageId: null
 };
 
 export const appReducer = createReducer(initialState, {
-    [addData]: state => state,
+    [updateTileSize]: (state, {payload}) => {
+        state.tileSize = payload;
+    },
+    [updateSearch]: (state, {payload}) => {
+        state.search = payload;
+    },
     [removeImage]: (state, {payload}) => {
         state.selectedImageId = null;
         delete state.data[payload];

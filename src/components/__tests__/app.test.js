@@ -8,8 +8,8 @@ it('renders without crashing', () => {
         data: Symbol('Data'),
         dataCount: Symbol('DataCount'),
         actions: {
-            addData: jest.fn(),
-            removeData: jest.fn()
+            updateTileSize: jest.fn(),
+            updateSearch: jest.fn()
         }
     };
     ReactDOM.render(<App {...props} />, div);

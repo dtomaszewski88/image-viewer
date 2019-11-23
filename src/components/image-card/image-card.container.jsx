@@ -3,6 +3,11 @@ import {bindActionCreators} from 'redux';
 import {selectImage, removeImage} from 'redux/actions/app.actions';
 
 import ImageCard from './image-card';
+import {getTileSize} from 'redux/selectors';
+
+const mapStateToProps = state => ({
+    tileSize: getTileSize(state)
+});
 
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(
@@ -15,6 +20,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(ImageCard);
