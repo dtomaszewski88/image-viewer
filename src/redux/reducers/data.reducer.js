@@ -1,7 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {imgDataFetchInit, imgDataFetchFail, imgDataFetchSuccess} from '../actions/data.actions';
 import {FETCH_STATUS} from 'constants/fetch-status';
-import {removeImage} from '../actions/app.actions';
+import {removeImage, updateImage} from '../actions/app.actions';
 
 const initialState = {
     imageData: [],
@@ -12,6 +12,10 @@ const initialState = {
 export const dataReducer = createReducer(initialState, {
     [removeImage]: (state, {payload}) => {
         delete state.imageData[payload];
+    },
+    [updateImage]: (state, {payload}) => {
+        const {itemImageId, field, value} = payload;
+        state.imageData[itemImageId][field] = value;
     },
     [imgDataFetchInit]: (state, {payload}) => {
         state.imageData = [];

@@ -1,12 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {
-    updateFetchCount,
-    updateSearch,
-    removeImage,
-    selectImage,
-    updateImage,
-    updateTileSize
-} from 'redux/actions/app.actions';
+import {updateFetchCount, updateSearch, removeImage, selectImage, updateTileSize} from 'redux/actions/app.actions';
 import {TILE_SIZES} from 'constants/tile-sizes';
 
 const initialState = {
@@ -31,9 +24,5 @@ export const appReducer = createReducer(initialState, {
     },
     [selectImage]: (state, {payload}) => {
         state.selectedImageId = payload;
-    },
-    [updateImage]: (state, {payload}) => {
-        const {itemImageId, field, value} = payload;
-        state.data[itemImageId][field] = value;
     }
 });
