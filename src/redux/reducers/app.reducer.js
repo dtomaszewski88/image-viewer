@@ -10,7 +10,7 @@ import {
 import {TILE_SIZES} from 'constants/tile-sizes';
 
 const initialState = {
-    fetchCount: 10,
+    fetchCount: 100,
     search: '',
     tileSize: TILE_SIZES.SMALL,
     selectedImageId: null
