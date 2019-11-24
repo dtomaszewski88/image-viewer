@@ -29,6 +29,11 @@ const ImageDetails = ({actions, imageItem}) => {
                 imageProps={{alt: imageItem.title, className: 'details-image'}}
                 fallbackComponent={imageFallback}
             />
+            <div className="details-size-info">
+                {imageItem.width}
+                {'x'}
+                {imageItem.height}
+            </div>
             <div className="details-toolbar-top">
                 <Button
                     onClick={evt => {

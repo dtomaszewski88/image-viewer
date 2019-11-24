@@ -5,19 +5,32 @@
     right: 0;
     bottom: 0;
     .img-details-placeholder {
-        position: absolute;
         filter: blur(0.5rem);
     }
     .img-details-placeholder,
     .details-image {
-        width: 100%;
-    }
-    .details-toolbar-top {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        transform: translate(-50%, -50%);
+    }
+    .details-toolbar-bottom,
+    .details-toolbar-top,
+    .details-size-info {
+        position: absolute;
+        color: #fefefe;
         padding: 1rem;
         background-color: rgba(0, 0, 0, 0.75);
+    }
+    .details-size-info {
+        top: 0;
+        left: 0;
+        border-radius: 0 0 0.5rem 0;
+    }
+    .details-toolbar-top {
+        top: 0;
+        right: 0;
         border-radius: 0 0 0 0.5rem;
         .btn {
             margin-left: 1rem;
@@ -30,12 +43,9 @@
         }
     }
     .details-toolbar-bottom {
-        position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 1rem;
-        background-color: rgba(0, 0, 0, 0.75);
         .form-group {
             margin: 0;
         }
