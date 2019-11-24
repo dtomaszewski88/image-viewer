@@ -15,7 +15,13 @@ const ImageCard = ({onConfirm}) => {
                 <Button onClick={noop} className="delete-cancel" variant="secondary">
                     <FontAwesomeIcon icon={faTimesCircle} />
                 </Button>
-                <Button onClick={() => onConfirm()} className="delete-confirm" variant="primary">
+                <Button
+                    onClick={() => {
+                        onConfirm();
+                    }}
+                    className="delete-confirm"
+                    variant="primary"
+                >
                     <FontAwesomeIcon icon={faCheckCircle} />
                 </Button>
             </div>

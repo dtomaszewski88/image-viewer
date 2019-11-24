@@ -26,9 +26,8 @@ export const appReducer = createReducer(initialState, {
     [updateSearch]: (state, {payload}) => {
         state.search = payload;
     },
-    [removeImage]: (state, {payload}) => {
+    [removeImage]: state => {
         state.selectedImageId = null;
-        delete state.data[payload];
     },
     [selectImage]: (state, {payload}) => {
         state.selectedImageId = payload;
