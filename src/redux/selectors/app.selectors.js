@@ -1,8 +1,9 @@
 import {createSelector} from '@reduxjs/toolkit';
 import {map, chain, filter} from 'lodash';
 import {getOr, orderBy} from 'lodash/fp';
+import {getImagesData} from './data.selectors';
 
-export const getAppData = getOr([], 'app.data');
+export const getFetchCount = getOr([], 'app.fetchCount');
 export const getSearch = getOr([], 'app.search');
 export const getTileSize = getOr([], 'app.tileSize');
 export const getSelectedImageId = getOr(null, 'app.selectedImageId');
@@ -23,7 +24,7 @@ const makeSearchMatcher = search => item => {
     return searchValue.indexOf(search) !== -1;
 };
 
-export const getFilteredData = createSelector([getAppData, getSearch], (data, search) => {
+export const getFilteredData = createSelector([getImagesData, getSearch], (data, search) => {
     if (!search || search.length < 3) {
         return data;
     }
@@ -39,9 +40,14 @@ export const getImgDataWithThumbnailUrl = createSelector([getSortedData, getTile
     return map(imgData, item => ({...item, thumbnail_url: getThumbUrl(item)}));
 });
 
-export const getSelectedImage = createSelector([getAppData, getSelectedImageId], (data, selectedImageId) => {
-    if (!selectedImageId) {
-        return null;
+export const getSelectedImage = createSelector(
+    [getImagesData, getSelectedImageId, getTileSize],
+    (data, selectedImageId, tileSize) => {
+        if (!selectedImageId) {
+            return null;
+        }
+        const {width} = tileSize;
+        const item = data[selectedImageId];
+        return {...item, thumbnail_url: makeGetThumbUrl(width)(item)};
     }
-    return data[selectedImageId];
-});
+);

@@ -19,10 +19,16 @@ const ImageDetails = ({actions, imageItem}) => {
     };
 
     const handleDeleteConfirm = () => removeImage(imageItem.id);
-
+    const imageFallback = (
+        <img className={'img-details-placeholder'} src={imageItem.thumbnail_url} alt={'placeholder'} />
+    );
     return (
         <div className="image-details" onClick={() => setDeletePrompt(false)}>
-            <LazyLoadImg src={imageItem.download_url} imageProps={{alt: imageItem.title, className: 'details-image'}} />
+            <LazyLoadImg
+                src={imageItem.download_url}
+                imageProps={{alt: imageItem.title, className: 'details-image'}}
+                fallbackComponent={imageFallback}
+            />
             <div className="details-toolbar-top">
                 <Button
                     onClick={evt => {

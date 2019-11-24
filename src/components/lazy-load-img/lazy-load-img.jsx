@@ -17,12 +17,14 @@ const LazyLoadImg = ({className, src, imageProps, fallbackComponent}) => {
     const isImageLoaded = currentImageLoaded || isUrlStored(src);
     const classes = classNames('lazy-load-img', className, {
         'has-placeholder': !isImageLoaded,
-        loaded: isImageLoaded
+        'has-image': isImageLoaded
     });
     return (
         <div className={classes}>
-            {!isImageLoaded && fallbackComponent}
-            <img src={src} {...imageProps} onLoad={() => updateImageLoadedUrl(src)} />
+            <div className="placeholder">{fallbackComponent}</div>
+            <div className="image-wrapper">
+                <img src={src} {...imageProps} onLoad={() => updateImageLoadedUrl(src)} />
+            </div>
         </div>
     );
 };

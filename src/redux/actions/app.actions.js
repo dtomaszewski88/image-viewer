@@ -1,5 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
 
+export const updateFetchCount = createAction('updateFetchCount');
 export const updateTileSize = createAction('updateTileSize');
 export const updateSearch = createAction('updateSearch');
 export const selectImage = createAction('selectImage');

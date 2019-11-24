@@ -6,71 +6,64 @@ import {faExpandArrowsAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import DeletePrompt from '../delete-prompt/delete-prompt';
 import LazyLoadImg from '../lazy-load-img/lazy-load-img';
 import classNames from 'classnames';
-import {useIsVisibleOnScreen} from 'custom-hooks/use-is-visible-on-screen';
 
 import './image-card.scss';
-import {TILE_SIZES} from 'constants/tile-sizes';
 
 const ImageCard = ({imageItem, actions, tileSize}) => {
     const {selectImage, removeImage} = actions;
     const [deletePrompt, setDeletePrompt] = useState(false);
-    const [elementRef, isVisibleOnScreen] = useIsVisibleOnScreen(imageItem.id, {vOffset: 600});
+
     const handleDeleteConfirm = () => removeImage(imageItem.id);
-    const classes = classNames('image-card', {hidden: !isVisibleOnScreen});
+    const handleSelect = () => selectImage(imageItem.id);
+
+    const classes = classNames('image-card', {'with-delete-prompt': deletePrompt});
     return (
         <div
-            ref={elementRef}
             className={classes}
             key={imageItem.id}
             style={tileSize}
             onClick={() => setDeletePrompt(false)}
+            onDoubleClick={handleSelect}
         >
-            {isVisibleOnScreen && (
-                <>
-                    <div className="image-card-toolbar">
-                        <Button
-                            onClick={() => selectImage(imageItem.id)}
-                            className="open-details-button"
-                            variant="info"
-                        >
-                            <FontAwesomeIcon icon={faExpandArrowsAlt} />
-                        </Button>
-                        <Button
-                            onClick={evt => {
-                                evt.stopPropagation();
-                                setDeletePrompt(true);
-                            }}
-                            className="remove-item"
-                            variant="danger"
-                        >
-                            <FontAwesomeIcon icon={faTrash} />
-                        </Button>
-                    </div>
-                    <div className="image-card-content">
-                        {deletePrompt && <DeletePrompt onConfirm={handleDeleteConfirm} />}
-                        <LazyLoadImg
-                            src={imageItem.thumbnail_url}
-                            imageProps={{
-                                alt: imageItem.title,
-                                className: 'image-img'
-                            }}
-                        />
-                    </div>
-                    <div className="image-card-desc">
-                        <div className="image-title">
-                            <span className="desc-caption">{'Title: '}</span>
-                            <span className="desc-text">{imageItem.title}</span>
-                        </div>
-                        <div className="image-author">
-                            <span className="desc-caption">{'Author: '}</span>
-                            <span className="desc-text">{imageItem.author}</span>
-                        </div>
-                    </div>
-                </>
-            )}
+            <div className="image-card-toolbar">
+                <Button onClick={handleSelect} className="open-details-button" variant="info">
+                    <FontAwesomeIcon icon={faExpandArrowsAlt} />
+                </Button>
+                <Button
+                    onClick={evt => {
+                        evt.stopPropagation();
+                        setDeletePrompt(true);
+                    }}
+                    className="remove-item"
+                    variant="danger"
+                >
+                    <FontAwesomeIcon icon={faTrash} />
+                </Button>
+            </div>
+            <div className="image-card-content">
+                {deletePrompt && <DeletePrompt onConfirm={handleDeleteConfirm} />}
+                <LazyLoadImg
+                    src={imageItem.thumbnail_url}
+                    imageProps={{
+                        alt: imageItem.title,
+                        className: 'image-img'
+                    }}
+                />
+            </div>
+            <div className="image-card-desc">
+                <div className="image-title">
+                    <span className="desc-caption">{'Title: '}</span>
+                    <span className="desc-text">{imageItem.title}</span>
+                </div>
+                <div className="image-author">
+                    <span className="desc-caption">{'Author: '}</span>
+                    <span className="desc-text">{imageItem.author}</span>
+                </div>
+            </div>
         </div>
     );
 };
+
 ImageCard.propTypes = {
     actions: shape({
         selectImage: func.isRequired,
@@ -84,9 +77,7 @@ ImageCard.propTypes = {
     tileSize: shape({
         width: number.isRequired,
         height: number.isRequired
-    })
+    }).isRequired
 };
-ImageCard.defaultProps = {
-    tileSize: TILE_SIZES.SMALL
-};
+
 export default ImageCard;

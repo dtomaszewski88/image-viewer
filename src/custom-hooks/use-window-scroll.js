@@ -1,28 +1,18 @@
-import {useLayoutEffect, useState} from 'react';
-import {forEach} from 'lodash';
+import {useLayoutEffect, useRef} from 'react';
+import {throttle} from 'lodash';
 
-export const useWindowScroll = (() => {
-    const SCROLL_HANDLERS_MAP = {};
-
+export const useWindowScroll = (callback, throttleTime = 2000) => {
+    const scrollValue = useRef({scrollX: 0, scrollY: 0});
     const windowScrollListener = () => {
         const {scrollX, scrollY} = window;
-        forEach(SCROLL_HANDLERS_MAP, setCurrentScroll => {
-            setCurrentScroll({scrollX, scrollY});
-        });
+        scrollValue.current = {scrollX, scrollY};
+        callback(scrollValue.current);
     };
-
-    return (key, throttleTime = 100) => {
-        const [currentScroll, setCurrentScroll] = useState({scrollX: 0, scrollY: 0});
-        useLayoutEffect(() => {
-            window.addEventListener('scroll', windowScrollListener);
-            if (!SCROLL_HANDLERS_MAP[key]) {
-                SCROLL_HANDLERS_MAP[key] = setCurrentScroll;
-            }
-            return () => {
-                delete SCROLL_HANDLERS_MAP[key];
-                window.removeEventListener('scroll', windowScrollListener);
-            };
-        });
-        return [currentScroll];
-    };
-})();
+    const throttledScrollListener = throttle(windowScrollListener, throttleTime);
+    useLayoutEffect(() => {
+        window.addEventListener('scroll', throttledScrollListener);
+        return () => {
+            window.removeEventListener('scroll', throttledScrollListener);
+        };
+    });
+};

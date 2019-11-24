@@ -1,12 +1,8 @@
 .image-card {
-    &.hidden {
-        background-color: #eeeeee;
-    }
     overflow: hidden;
     position: relative;
     cursor: pointer;
     border-radius: 0.25rem;
-    margin-bottom: 1rem;
     .image-card-content {
         width: 100%;
         height: 100%;

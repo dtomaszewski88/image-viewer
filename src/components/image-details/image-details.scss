@@ -4,12 +4,14 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: cyan;
-    
+    .img-details-placeholder {
+        position: absolute;
+        filter: blur(0.5rem);
+    }
+    .img-details-placeholder,
     .details-image {
         width: 100%;
     }
-
     .details-toolbar-top {
         position: absolute;
         top: 0;
